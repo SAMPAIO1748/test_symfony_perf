@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<table>
+
+		<thead>
+			<tr>
+
+				<th>Modele</th>
+				<th>Marque</th>
+				<th>Prix</th>
+				<th>Stock</th>
+			</tr>
+
+		</thead>
+
+		<tbody>
+
+			<tr>
+
+				<td>{{car.model}}</td>
+				<td>{{car.marque}}</td>
+				<td>{{car.price}}</td>
+				<td>{{car.stock}}</td>
+
+			</tr>
+
+		</tbody>
+
+	</table>
+
+{% endblock %}
