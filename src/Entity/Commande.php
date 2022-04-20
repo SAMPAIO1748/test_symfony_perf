@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,16 @@ class Commande
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="commandes")
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Card::class, mappedBy="commande")
+     */
+    private $cards;
+
+    public function __construct()
+    {
+        $this->cards = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +149,36 @@ class Commande
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Card>
+     */
+    public function getCards(): Collection
+    {
+        return $this->cards;
+    }
+
+    public function addCard(Card $card): self
+    {
+        if (!$this->cards->contains($card)) {
+            $this->cards[] = $card;
+            $card->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCard(Card $card): self
+    {
+        if ($this->cards->removeElement($card)) {
+            // set the owning side to null (unless already changed)
+            if ($card->getCommande() === $this) {
+                $card->setCommande(null);
+            }
+        }
 
         return $this;
     }

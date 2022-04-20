@@ -6,7 +6,7 @@
 
 	{% if items == [] %}
 
-		<h3>Votre panier eest vide. Remplissez le vite !!!!!!</h3>
+		<h3>Votre panier est vide. Remplissez le vite !!!!!!</h3>
 
 	{% else %}
 
@@ -22,6 +22,7 @@
 			<hr>
 		{% endfor %}
 
+		<a href="{{ path('create_command') }}">Confirmer la commande</a>
 
 	{% endif %}
 
