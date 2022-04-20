@@ -16,6 +16,9 @@
 			<h2>{{ item.car.marque }}</h2>
 			<h2>{{ item.car.price }}</h2>
 			<h3>{{ item.quantity }}</h3>
+			<h3>
+				<a href="{{ path("delete_cart", {'id' : item.car.id}) }}">Supprimer</a>
+			</h3>
 			<hr>
 		{% endfor %}
 

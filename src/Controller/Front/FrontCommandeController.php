@@ -53,4 +53,22 @@ class FrontCommandeController extends AbstractController
 
         return $this->render('front/cart.html.twig', ['items' => $cartWithData]);
     }
+
+    /**
+     * @Route("cart/delete/{id}", name="delete_cart")
+     */
+    public function deleteCart($id, SessionInterface $sessionInterface)
+    {
+        $cart = $sessionInterface->get('cart', []);
+
+        if (!empty($cart[$id] && $cart[$id] == 1)) {
+            unset($cart[$id]);
+        } else {
+            $cart[$id]--;
+        }
+
+        $sessionInterface->set('cart', $cart);
+
+        return $this->redirectToRoute('front_show_cart');
+    }
 }
