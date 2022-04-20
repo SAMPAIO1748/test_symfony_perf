@@ -44,9 +44,15 @@ class Car
      */
     private $cards;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="car")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->cards = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,5 +136,46 @@ class Car
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setCar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getCar() === $this) {
+                $like->setCar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isLikeByUser(User $user)
+    {
+        foreach ($this->likes as $like) {
+            if ($like->getUser() === $user) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
