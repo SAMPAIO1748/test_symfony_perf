@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<table>
+		<thead>
+			<tr>
+				<th>Modele</th>
+				<th>Marque</th>
+				<th>Prix</th>
+				<th>Stock</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for car in cars %}
+
+				<tr>
+					<td>
+						<a href="{{ path('front_car_show', {'id' : car.id }) }}">{{car.model}}</a>
+					</td>
+					<td>{{car.marque}}</td>
+					<td>{{car.price}}
+						€</td>
+					<td>{{car.stock}}</td>
+				</tr>
+
+			{% endfor %}
+		</tbody>
+
+	</table>
+
+
+{% endblock %}

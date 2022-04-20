@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	{#dump(items)#}
+
+	{% if items == [] %}
+
+		<h3>Votre panier eest vide. Remplissez le vite !!!!!!</h3>
+
+	{% else %}
+
+		{% for item in items %}
+
+			<h2>{{ item.car.model }}</h2>
+			<h2>{{ item.car.marque }}</h2>
+			<h2>{{ item.car.price }}</h2>
+			<h3>{{ item.quantity }}</h3>
+			<hr>
+		{% endfor %}
+
+
+	{% endif %}
+
+{% endblock %}

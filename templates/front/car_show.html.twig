@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+	<table>
+		<thead>
+			<tr>
+				<th>Modele</th>
+				<th>Marque</th>
+				<th>Prix</th>
+				<th>Stock</th>
+				<th>Panier</th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+			<tr>
+				<td>{{car.model}}</td>
+				<td>{{car.marque}}</td>
+				<td>{{car.price}}
+					€</td>
+				<td>{{car.stock}}</td>
+				<td>
+					<a href="{{ path('add_cart', {'id' : car.id }) }}">Ajouter au panier</a>
+				</td>
+			</tr>
+
+		</tbody>
+
+	</table>
+
+{% endblock %}
