@@ -103,8 +103,6 @@ class FrontCommandeController extends AbstractController
         $commande->setDate(new \DateTime("NOW"));
         $commande->setPrice($price_commande);
 
-
-
         if ($commandeForm->isSubmitted() && $commandeForm->isValid()) {
 
             $entityManagerInterface->persist($commande);
