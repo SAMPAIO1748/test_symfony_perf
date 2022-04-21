@@ -149,6 +149,7 @@ class FrontCommandeController extends AbstractController
                         'price' => $price_commande // variable contenu dans le fichier twig
                     ]);
 
+                // envoie de l'email
                 $mailerInterface->send($email);
             } else {
                 $commande->setUser(NULL);
