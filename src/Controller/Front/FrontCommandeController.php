@@ -9,11 +9,13 @@ use App\Form\CommandeType;
 use App\Repository\CarRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
 
 class FrontCommandeController extends AbstractController
 {
@@ -87,7 +89,8 @@ class FrontCommandeController extends AbstractController
         CarRepository $carRepository,
         Request $request,
         EntityManagerInterface $entityManagerInterface,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        MailerInterface $mailerInterface
     ) {
 
         $commande = new Commande();
@@ -135,6 +138,18 @@ class FrontCommandeController extends AbstractController
                 $user_mail = $user->getUserIdentifier();
                 $user_true = $userRepository->findOneBy(['email' => $user_mail]);
                 $commande->setUser($user_true);
+
+                // création de l'email
+                $email = (new TemplatedEmail())
+                    ->from("test@test.com") // origine de l'envoie
+                    ->to($user_mail) // destination
+                    ->subject('Commande') // sujet du mail
+                    ->htmlTemplate('front/email.html.twig') // fichier twig qui contiendra le code html du mail
+                    ->context([
+                        'price' => $price_commande // variable contenu dans le fichier twig
+                    ]);
+
+                $mailerInterface->send($email);
             } else {
                 $commande->setUser(NULL);
             }
